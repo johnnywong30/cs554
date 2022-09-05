@@ -1,4 +1,7 @@
 const { ObjectId } = require('mongodb');
+const { moods } = require('./moods.json');
+
+const capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1);
 
 const validate = {
   checkString(str) {
@@ -7,6 +10,15 @@ const validate = {
     const trimmed = str.trim();
     if (trimmed.length < 1) throw new Error('input string cannot be just empty spaces!');
     return trimmed;
+  },
+  checkSweetMood(sweetMood) {
+    if (!sweetMood) throw new Error('sweetMood does not exist!');
+    if (typeof sweetMood !== 'string') throw new Error('sweetMood is not a string!');
+    const trimmed = sweetMood.trim();
+    if (trimmed.length < 1) throw new Error('sweetMood cannot be just empty spaces!');
+    const mood = capitalize(trimmed);
+    if (!moods.includes(mood)) throw new Error(`sweetMood ${mood} is invalid!`);
+    return mood;
   },
   checkNumber(num) {
     if (!num) throw new Error('number does not exist!');

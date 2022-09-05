@@ -19,7 +19,6 @@ app.use(session({
   saveUninitialized: true,
 }));
 
-// middleware
 middleware(app);
 
 configRoutes(app);
