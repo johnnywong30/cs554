@@ -4,14 +4,23 @@
 // Pledge: I pledge my honor that I have abided by the Stevens Honor System.
 
 const express = require('express');
-
-const app = express();
+const session = require('express-session');
 const configRoutes = require('./routes');
 
+const app = express();
 app.use(express.json());
-configRoutes(app);
+app.use(express.urlencoded({ extended: true }));
+
+app.use(session({
+  name: 'AuthCookie',
+  secret: 'some secret string!',
+  resave: false,
+  saveUninitialized: true,
+}));
 
 // middleware
+
+configRoutes(app);
 
 app.listen(3000, () => {
   console.log("We've now got a server!");
