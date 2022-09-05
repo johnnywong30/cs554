@@ -1,20 +1,21 @@
-const MongoClient = require('mongodb').MongoClient
-const settings = require('./settings')
-const mongoConfig = settings.mongoConfig
+const { MongoClient } = require('mongodb');
+const settings = require('./settings.json');
 
-let _connection = undefined;
-let _db = undefined;
+const { mongoConfig } = settings;
+
+let connection;
+let db;
 
 module.exports = {
-    connectToDb: async () => {
-        if (!_connection) {
-            _connection = await MongoClient.connect(mongoConfig.serverUrl)
-            _db = await _connection.db(mongoConfig.database)
-        }
-
-        return _db
-    },
-    closeConnection: () => {
-        _connection.close()
+  connectToDb: async () => {
+    if (!connection) {
+      connection = await MongoClient.connect(mongoConfig.serverUrl);
+      db = await connection.db(mongoConfig.database);
     }
+
+    return db;
+  },
+  closeConnection: () => {
+    connection.close();
+  },
 };

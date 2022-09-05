@@ -105,3 +105,6 @@ dist
 
 # ESLint
 .eslintrc.json
+
+# Lock file
+package-lock.json
