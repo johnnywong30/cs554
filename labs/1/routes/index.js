@@ -8,9 +8,7 @@ const { sweetsRouter } = require('./sweets');
 const constructorMethod = (app) => {
   app.use('/sweets', sweetsRouter);
 
-  app.use('*', (req, res) => {
-    res.status(404).json({ error: 'Route not found' });
-  });
+  app.use('*', (req, res) => res.status(404).json({ error: 'Route not found' }));
 };
 
 module.exports = constructorMethod;

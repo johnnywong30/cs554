@@ -14,8 +14,6 @@ const sweetsRouter = express.Router();
 sweetsRouter
   .route('/signup')
   .post(async (req, res) => {
-    // if logged in, cannot sign up, just return your own user session info
-    if (req.session.user) return res.status(200).json(req.session.user);
     const { username, password } = req.body;
     let registered;
     try {
@@ -31,8 +29,6 @@ sweetsRouter
 sweetsRouter
   .route('/login')
   .post(async (req, res) => {
-    // if logged in, cannot login, just return your own user session info
-    if (req.session.user) return res.status(200).json(req.session.user);
     const { username, password } = req.body;
     let validated;
     try {

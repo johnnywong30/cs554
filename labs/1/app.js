@@ -6,6 +6,7 @@
 const express = require('express');
 const session = require('express-session');
 const configRoutes = require('./routes');
+const middleware = require('./middleware');
 
 const app = express();
 app.use(express.json());
@@ -19,6 +20,7 @@ app.use(session({
 }));
 
 // middleware
+middleware(app);
 
 configRoutes(app);
 
