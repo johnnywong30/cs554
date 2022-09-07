@@ -102,7 +102,6 @@ sweetsRouter
   .route('/:id')
   .get(async (req, res) => {
     try {
-      // const id = checkId(req.params.albumId)
       const sweetId = checkId(req.params.id);
       const sweet = await getSweet(sweetId);
       return res.status(200).json(sweet);
@@ -111,25 +110,71 @@ sweetsRouter
     }
   })
   .patch(async (req, res) => {
-
+    try {
+      const sweetId = checkId(req.params.id);
+      const { sweetText, sweetMood } = req.body;
+      if (!sweetText && !sweetMood) throw new Error('Need one updated sweetText or sweetMood');
+      const oldSweet = await getSweet(sweetId);
+      if (sweetText && oldSweet.sweetText === checkString(sweetText)) throw new Error('Updated sweetText cannot be the same as previous sweetText');
+      if (sweetMood && oldSweet.sweetMood === checkSweetMood(sweetMood)) throw new Error('Updated sweetMood cannot be the same as previous sweetMood');
+      const body = {};
+      if (sweetText) body.sweetText = checkString(sweetText);
+      if (sweetMood) body.sweetMood = checkSweetMood(sweetMood);
+      const sweet = await updateSweet(sweetId, body);
+      return res.status(200).json(sweet);
+    } catch (e) {
+      return res.status(404).json({ error: e.message });
+    }
   });
 
 sweetsRouter
   .route('/:id/replies')
   .post(async (req, res) => {
-
+    try {
+      const sweetId = checkId(req.params.id);
+      const { reply } = req.body;
+      const replyText = checkString(reply);
+      const { _id, username } = req.session.user;
+      const userInfo = {
+        userId: checkId(_id),
+        username: checkUsername(username),
+      };
+      const sweet = await replySweet(sweetId, replyText, userInfo);
+      return res.status(200).json(sweet);
+    } catch (e) {
+      return res.status(404).json({ error: e.message });
+    }
   });
 
 sweetsRouter
   .route('/:sweetId/:replyId')
   .delete(async (req, res) => {
-
+    try {
+      const { sweetId, replyId } = req.params;
+      const sid = checkId(sweetId);
+      const rid = checkId(replyId);
+      await getSweet(sid);
+      const sweet = await deleteReplySweet(sid, rid);
+      return res.status(200).json(sweet);
+    } catch (e) {
+      return res.status(400).json({ error: e.message });
+    }
   });
 
 sweetsRouter
   .route('/:id/likes')
   .post(async (req, res) => {
-
+    try {
+      const { id } = req.params;
+      const { _id } = req.session.user;
+      const sid = checkId(id);
+      const uid = checkId(_id);
+      await getSweet(sid);
+      const sweet = await likeSweet(sid, uid);
+      return res.status(200).json(sweet);
+    } catch (e) {
+      return res.status(400).json({ error: e.message });
+    }
   });
 
 module.exports = {

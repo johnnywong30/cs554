@@ -109,7 +109,8 @@ module.exports = {
 
     const collection = await sweets();
     const sweet = await module.exports.getSweet(id);
-    const dislike = sweet.replies.includes(uid);
+    const likes = sweet.likes.map((x) => x.toString());
+    const dislike = likes.includes(uid);
     const action = dislike ? { $pull: { likes: ObjectId(uid) } }
       : { $addToSet: { likes: ObjectId(uid) } };
     const updateSweet = await collection.updateOne(

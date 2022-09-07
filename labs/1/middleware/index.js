@@ -9,13 +9,10 @@ const configMiddleware = (app) => {
       } else if (!req.session.user) return res.status(403).json({ error: 'Must be logged in for this request!' });
       if (req.params.id && !sweetBelongsToUser(req)) return res.status(403).json({ error: 'You are not the original poster' });
     }
-    if (req.method === 'PUT') {
+    if (req.method === 'PUT' || req.method === 'PATCH' || req.method === 'DELETE') {
       if (!req.session.user) return res.status(403).json({ error: 'Must be logged in for this request!' });
-      if (req.params.id && !sweetBelongsToUser(req)) return res.status(403).json({ error: 'You are not the original poster' });
-    }
-    if (req.method === 'PATCH') {
-      if (!req.session.user) return res.status(403).json({ error: 'Must be logged in for this request!' });
-      if (req.params.id && !sweetBelongsToUser(req)) return res.status(403).json({ error: 'You are not the original poster' });
+      if (req.params.id && !sweetBelongsToUser(req, req.params.id)) return res.status(403).json({ error: 'You are not the original author' });
+      if (req.params.sweetId && !sweetBelongsToUser(req, req.params.sweetId)) return res.status(403).json({ error: 'You are not the original author' });
     }
     return next();
   });
