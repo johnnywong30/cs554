@@ -40,7 +40,23 @@ module.exports = {
     const collection = await sweets();
     const sweet = await collection.findOne({ _id: ObjectId(id) });
     if (!sweet) throw new Error('No Sweet with such id');
-    return sweet;
+    return {
+      _id: sweet._id.toString(),
+      userThatPosted: {
+        _id: sweet.userThatPosted._id.toString(),
+        ...sweet.userThatPosted,
+      },
+      replies: sweet.replies.map((reply) => ({
+        _id: reply._id.toString(),
+        userThatPostedReply: {
+          _id: reply.userThatPostedReply._id.toString(),
+          ...reply.userThatPostedReply,
+        },
+        ...reply,
+      })),
+      likes: sweet.likes.map((userId) => userId.toString()),
+      ...sweet,
+    };
   },
   getSweets: async (page) => {
     const pageNum = checkNumber(page);
@@ -50,8 +66,27 @@ module.exports = {
       .skip((pageNum - 1) * paginationAmt)
       .limit(paginationAmt)
       .toArray();
-    if (sweetsPage.length < 1) throw new Error('There are no more Sweets...');
-    return sweetsPage;
+
+    const sweetsList = sweetsPage.map((sweet) => ({
+      _id: sweet._id.toString(),
+      userThatPosted: {
+        _id: sweet.userThatPosted._id.toString(),
+        ...sweet.userThatPosted,
+      },
+      replies: sweet.replies.map((reply) => ({
+        _id: reply._id.toString(),
+        userThatPostedReply: {
+          _id: reply.userThatPostedReply._id.toString(),
+          ...reply.userThatPostedReply,
+        },
+        ...reply,
+      })),
+      likes: sweet.likes.map((userId) => userId.toString()),
+      ...sweet,
+    }));
+    if (sweetsList.length < 1) throw new Error('There are no more Sweets...');
+
+    return sweetsList;
   },
   updateSweet: async (sweetId, { sweetText, sweetMood }) => {
     const id = checkId(sweetId);

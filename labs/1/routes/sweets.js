@@ -113,10 +113,19 @@ sweetsRouter
     try {
       const sweetId = checkId(req.params.id);
       const { sweetText, sweetMood } = req.body;
+
       if (!sweetText && !sweetMood) throw new Error('Need one updated sweetText or sweetMood');
       const oldSweet = await getSweet(sweetId);
-      if (sweetText && oldSweet.sweetText === checkString(sweetText)) throw new Error('Updated sweetText cannot be the same as previous sweetText');
-      if (sweetMood && oldSweet.sweetMood === checkSweetMood(sweetMood)) throw new Error('Updated sweetMood cannot be the same as previous sweetMood');
+      const sameText = sweetText && oldSweet.sweetText === checkString(sweetText);
+      const sameMood = sweetMood && oldSweet.sweetMood === checkSweetMood(sweetMood);
+      const bothPresent = sweetText && sweetMood;
+      //   if both present and one is 0
+      if (sameText && sameMood) throw new Error('Updated sweetText and sweetMood cannot be the same as their originals');
+      //   if (bothPresent && (!sameText || !sameMood)) throw new Error('Updated sweetText cannot be the same as original');
+      //   if (bothPresent && (!sameText || !sameMood)) throw new Error('Updated sweetMood cannot be the same as original');
+      if (!bothPresent && sameText) throw new Error('Updated sweetText cannot be the same as original');
+      if (!bothPresent && sameMood) throw new Error('Updated sweetMood cannot be the same as original');
+
       const body = {};
       if (sweetText) body.sweetText = checkString(sweetText);
       if (sweetMood) body.sweetMood = checkSweetMood(sweetMood);
