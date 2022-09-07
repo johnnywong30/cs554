@@ -68,7 +68,6 @@ sweetsRouter
     try {
       if (pageNum < 1 || !Number.isInteger(pageNum)) throw new Error('Invalid page number');
       const sweets = await getSweets(pageNum);
-      if (sweets.length < 1) throw new Error('There are no more Sweets...');
       return res.status(200).json(sweets);
     } catch (e) {
       return res.status(404).json({ error: e.message });
