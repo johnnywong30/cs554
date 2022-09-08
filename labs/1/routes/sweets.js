@@ -39,15 +39,15 @@ sweetsRouter
       const user = checkUsername(username);
       const pass = checkPassword(password);
       validated = await validateUser(user, pass);
+      req.session.user = {
+      // eslint-disable-next-line no-underscore-dangle
+        _id: validated._id,
+        username: validated.username,
+      };
+      return res.status(200).json(validated);
     } catch (e) {
       return res.status(400).json({ error: e.message });
     }
-    req.session.user = {
-      // eslint-disable-next-line no-underscore-dangle
-      _id: validated._id,
-      username: validated.username,
-    };
-    return res.status(200).json(validated);
   });
 
 sweetsRouter
@@ -121,8 +121,6 @@ sweetsRouter
       const bothPresent = sweetText && sweetMood;
       //   if both present and one is 0
       if (sameText && sameMood) throw new Error('Updated sweetText and sweetMood cannot be the same as their originals');
-      //   if (bothPresent && (!sameText || !sameMood)) throw new Error('Updated sweetText cannot be the same as original');
-      //   if (bothPresent && (!sameText || !sameMood)) throw new Error('Updated sweetMood cannot be the same as original');
       if (!bothPresent && sameText) throw new Error('Updated sweetText cannot be the same as original');
       if (!bothPresent && sameMood) throw new Error('Updated sweetMood cannot be the same as original');
 
@@ -132,7 +130,7 @@ sweetsRouter
       const sweet = await updateSweet(sweetId, body);
       return res.status(200).json(sweet);
     } catch (e) {
-      return res.status(404).json({ error: e.message });
+      return res.status(400).json({ error: e.message });
     }
   });
 
@@ -151,7 +149,7 @@ sweetsRouter
       const sweet = await replySweet(sweetId, replyText, userInfo);
       return res.status(200).json(sweet);
     } catch (e) {
-      return res.status(404).json({ error: e.message });
+      return res.status(400).json({ error: e.message });
     }
   });
 
