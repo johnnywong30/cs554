@@ -6,7 +6,11 @@
 // Pledge: I pledge my honor that I have abided by the Stevens Honor System.
 const { ObjectId } = require('mongodb');
 const {
-  checkNumber, checkString, checkSweetMood, checkId, checkUsername,
+  checkNumber,
+  checkString,
+  checkSweetMood,
+  checkId,
+  checkUsername,
 } = require('../misc/validate');
 const { sweets } = require('../config/mongoCollections');
 
@@ -40,29 +44,32 @@ module.exports = {
     const collection = await sweets();
     const sweet = await collection.findOne({ _id: ObjectId(id) });
     if (!sweet) throw new Error('No Sweet with such id');
-    return {
+    // my toString() just doesn't work i am sad be nice please
+    const cleanSweet = {
       _id: sweet._id.toString(),
       userThatPosted: {
-        _id: sweet.userThatPosted._id.toString(),
         ...sweet.userThatPosted,
+        _id: sweet.userThatPosted._id.toString(),
       },
       replies: sweet.replies.map((reply) => ({
+        ...reply,
         _id: reply._id.toString(),
         userThatPostedReply: {
           _id: reply.userThatPostedReply._id.toString(),
           ...reply.userThatPostedReply,
         },
-        ...reply,
       })),
       likes: sweet.likes.map((userId) => userId.toString()),
       ...sweet,
     };
+    return cleanSweet;
   },
   getSweets: async (page) => {
     const pageNum = checkNumber(page);
     const paginationAmt = 50;
     const collection = await sweets();
-    const sweetsPage = await collection.find({})
+    const sweetsPage = await collection
+      .find({})
       .skip((pageNum - 1) * paginationAmt)
       .limit(paginationAmt)
       .toArray();
@@ -70,16 +77,16 @@ module.exports = {
     const sweetsList = sweetsPage.map((sweet) => ({
       _id: sweet._id.toString(),
       userThatPosted: {
-        _id: sweet.userThatPosted._id.toString(),
         ...sweet.userThatPosted,
+        _id: sweet.userThatPosted._id.toString(),
       },
       replies: sweet.replies.map((reply) => ({
+        ...reply,
         _id: reply._id.toString(),
         userThatPostedReply: {
-          _id: reply.userThatPostedReply._id.toString(),
           ...reply.userThatPostedReply,
+          _id: reply.userThatPostedReply._id.toString(),
         },
-        ...reply,
       })),
       likes: sweet.likes.map((userId) => userId.toString()),
       ...sweet,
@@ -96,10 +103,7 @@ module.exports = {
     if (sweetMood) updateDetails.sweetMood = checkSweetMood(sweetMood);
 
     const collection = await sweets();
-    const updatedSweet = await collection.updateOne(
-      { _id: ObjectId(id) },
-      { $set: updateDetails },
-    );
+    const updatedSweet = await collection.updateOne({ _id: ObjectId(id) }, { $set: updateDetails });
     if (updatedSweet.modifiedCount < 1) throw new Error('Could not update Sweet successfully');
     return await module.exports.getSweet(id);
   },
@@ -146,14 +150,11 @@ module.exports = {
     const sweet = await module.exports.getSweet(id);
     const likes = sweet.likes.map((x) => x.toString());
     const dislike = likes.includes(uid);
-    const action = dislike ? { $pull: { likes: ObjectId(uid) } }
+    const action = dislike
+      ? { $pull: { likes: ObjectId(uid) } }
       : { $addToSet: { likes: ObjectId(uid) } };
-    const updateSweet = await collection.updateOne(
-      { _id: ObjectId(id) },
-      action,
-    );
+    const updateSweet = await collection.updateOne({ _id: ObjectId(id) }, action);
     if (updateSweet.modifiedCount < 1) throw new Error('Could not update like status on Sweet');
     return await module.exports.getSweet(id);
   },
-
 };
