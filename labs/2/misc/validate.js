@@ -1,9 +1,9 @@
 module.exports = {
   checkId: (id) => {
     if (!id) throw new Error('id does not exist!');
-    if (typeof id !== 'number' || Number.isNaN(id) || !Number.isInteger(id)) throw new Error('id is not an integer!');
-    if (id < 0) throw new Error('id cannot be a negative integer!');
-    // console.log(id);
+    const num = Number(id);
+    if (typeof num !== 'number' || Number.isNaN(num) || !Number.isInteger(num)) throw new Error('id is not an integer!');
+    if (num < 0) throw new Error('id cannot be a negative integer!');
     return id;
   },
 };

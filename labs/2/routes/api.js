@@ -1,5 +1,4 @@
 const express = require('express');
-// const flat = require('flat');
 const { checkId } = require('../misc/validate');
 const { getCharacter, getComic, getStory } = require('../data/marvel');
 const { client } = require('../redis');
@@ -10,7 +9,7 @@ apiRouter.route('/characters/history').get(async (req, res) => {
   try {
     const recentExists = await client.exists('recentCharacters');
     if (!recentExists) return res.status(200).json([]);
-    const mostRecent = await client.lRange('recentCharacters', 0, 19);
+    const mostRecent = await client.lRange('recentCharacters', 0, 19); // todo check this for 20
     const mostRecentData = await Promise.all(
       mostRecent.map(async (id) => {
         const characterExists = await client.hExists('characters', id);
@@ -28,7 +27,7 @@ apiRouter.route('/characters/history').get(async (req, res) => {
 
 apiRouter.route('/characters/:id').get(async (req, res) => {
   try {
-    const characterId = checkId(Number(req.params.id.trim()));
+    const characterId = checkId(req.params.id.trim());
     const characterData = await getCharacter(characterId);
     const { results } = characterData.data;
     const resultString = JSON.stringify(results[0]);
@@ -42,7 +41,7 @@ apiRouter.route('/characters/:id').get(async (req, res) => {
 
 apiRouter.route('/comics/:id').get(async (req, res) => {
   try {
-    const comicId = checkId(Number(req.params.id.trim()));
+    const comicId = checkId(req.params.id.trim());
     const comicData = await getComic(comicId);
     const { results } = comicData.data;
     const resultString = JSON.stringify(results[0]);
@@ -55,7 +54,7 @@ apiRouter.route('/comics/:id').get(async (req, res) => {
 
 apiRouter.route('/stories/:id').get(async (req, res) => {
   try {
-    const storyId = checkId(Number(req.params.id.trim()));
+    const storyId = checkId(req.params.id.trim());
     const storyData = await getStory(storyId);
     const { results } = storyData.data;
     const resultString = JSON.stringify(results[0]);

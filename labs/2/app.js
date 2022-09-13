@@ -11,9 +11,9 @@ const { unflatten } = flat;
 
 app.use('/api/characters/:id', async (req, res, next) => {
   try {
-    // why does history share the same route as this basically
     if (req.params.id.trim() === 'history') return next();
-    checkId(Number(req.params.id.trim()));
+    // todo fix checkId, check its a number inside
+    checkId(req.params.id.trim());
     const characterExists = await client.hExists('characters', req.params.id.trim());
     if (characterExists) {
       const result = await client.hGet('characters', req.params.id.trim());
@@ -23,12 +23,12 @@ app.use('/api/characters/:id', async (req, res, next) => {
     }
     return next();
   } catch (e) {
-    return res.status(404).json({ error: e });
+    return res.status(404).json({ error: e.message });
   }
 });
 app.use('/api/comics/:id', async (req, res, next) => {
   try {
-    checkId(Number(req.params.id.trim()));
+    checkId(req.params.id.trim());
     const comicExists = await client.hExists('comics', req.params.id.trim());
     if (comicExists) {
       const result = await client.hGet('comics', req.params.id.trim());
@@ -37,12 +37,12 @@ app.use('/api/comics/:id', async (req, res, next) => {
     }
     return next();
   } catch (e) {
-    return res.status(404).json({ error: e });
+    return res.status(404).json({ error: e.message });
   }
 });
 app.use('/api/stories/:id', async (req, res, next) => {
   try {
-    checkId(Number(req.params.id.trim()));
+    checkId(req.params.id.trim());
     const storyExists = await client.hExists('stories', req.params.id.trim());
     if (storyExists) {
       const result = await client.hGet('stories', req.params.id.trim());
@@ -51,7 +51,7 @@ app.use('/api/stories/:id', async (req, res, next) => {
     }
     return next();
   } catch (e) {
-    return res.status(404).json({ error: e });
+    return res.status(404).json({ error: e.message });
   }
 });
 
