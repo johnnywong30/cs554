@@ -1,11 +1,9 @@
-const flat = require('flat');
 const express = require('express');
 const { checkId } = require('./misc/validate');
 const configRoutes = require('./routes');
 const { client, connect } = require('./redis');
 
 const app = express();
-const { unflatten } = flat;
 
 // redis middleware
 
