@@ -52,9 +52,10 @@ const ShowList = () => {
   const [loading, setLoading] = useState(true);
   const [searchData, setSearchData] = useState(undefined);
   const [showsData, setShowsData] = useState(undefined);
+  const [nextShowsDataSize, setNextShowsDataSize] = useState(0);
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setPage] = useState(undefined)
-  let { pageNumber } = useParams();
+  let { pagenum } = useParams();
   const navigate = useNavigate();
   let card = null;
 
@@ -62,26 +63,43 @@ const ShowList = () => {
     console.log('on load useeffect');
     async function fetchData() {
       try {
-        if (pageNumber && Number(pageNumber < 0)) {
+        if (pagenum && Number(pagenum < 0)) {
           navigate('/shows')
         }
-        const page = pageNumber && Number(pageNumber) > 0 ? `?page=${pageNumber}` : ''
+        const page = pagenum && Number(pagenum) > 0 ? `?page=${pagenum}` : ''
         const url = `http://api.tvmaze.com/shows${page}`
         const {data} = await axios.get(url);
         setShowsData(data);
-        if (pageNumber && Number(pageNumber) > 0) {
-          setPage(Number(pageNumber));
+        setLoading(false);
+        if (pagenum && Number(pagenum) > 0) {
+          setPage(Number(pagenum));
         }
         else {
           setPage(0);
+          
         }
-        setLoading(false);
       } catch (e) {
         console.log(e);
       }
     }
+    const checkNextPage = async () => {
+      try {
+        if (pagenum && Number(pagenum) >= 0) {
+          const nextPage = await axios.get(`http://api.tvmaze.com/shows?page=${Number(pagenum) + 1}`)
+          setNextShowsDataSize(nextPage.data.length)
+        }
+        else {
+          const nextPage = await axios.get('http://api.tvmaze.com/shows?page=1')
+          setNextShowsDataSize(nextPage.data.length)
+        }
+      } catch (e) {
+        console.log(e)
+        setNextShowsDataSize(0)
+      }
+    }
     fetchData();
-  }, [pageNumber]);
+    checkNextPage();
+  }, [pagenum]);
 
   useEffect(() => {
     console.log('search useEffect fired');
@@ -178,7 +196,11 @@ const ShowList = () => {
           && 
           <Navigate navText={'Previous Page'} navLink={`/shows/page/${currentPage - 1}`} />
         }
-        <Navigate navText={'Next Page'} navLink={`/shows/page/${currentPage + 1}`} />
+        {
+          nextShowsDataSize > 0
+          && 
+          <Navigate navText={'Next Page'} navLink={`/shows/page/${currentPage + 1}`} />
+        }
         </div>
         <br />
         <br />
