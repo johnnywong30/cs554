@@ -63,7 +63,7 @@ const ShowList = () => {
     console.log('on load useeffect');
     async function fetchData() {
       try {
-        if (pagenum && Number(pagenum < 0)) {
+        if (pagenum && Number(pagenum) < 0) {
           navigate('/shows')
         }
         const page = pagenum && Number(pagenum) > 0 ? `?page=${pagenum}` : ''
