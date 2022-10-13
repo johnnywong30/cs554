@@ -1,6 +1,6 @@
 const express = require('express');
-const { checkId } = require('../misc/validate');
-const { getCharacter, getComic, getStory } = require('../data/marvel');
+const { checkId, checkPage } = require('../misc/validate');
+const { getCharacter, getComic, getStory, getCharacterPage, getComicPage, getStoryPage } = require('../data/marvel');
 const { client } = require('../redis');
 
 const apiRouter = express.Router();
@@ -60,6 +60,45 @@ apiRouter.route('/stories/:id').get(async (req, res) => {
     const resultString = JSON.stringify(results[0]);
     await client.hSet('stories', req.params.id.trim(), resultString);
     return res.status(200).json(results[0]);
+  } catch (e) {
+    return res.status(404).json({ error: e.message });
+  }
+});
+
+apiRouter.route('/characters/page/:pagenum').get(async (req, res) => {
+  try {
+    const pagenum = checkPage(req.params.pagenum.trim());
+    const characterPage = await getCharacterPage(pagenum);
+    const { results } = characterPage.data;
+    const resultString = JSON.stringify(results);
+    await client.hSet('characterPages', pagenum, resultString);
+    return res.status(200).json(results);
+  } catch (e) {
+    return res.status(404).json({ error: e.message });
+  }
+});
+
+apiRouter.route('/comics/page/:pagenum').get(async (req, res) => {
+  try {
+    const pagenum = checkPage(req.params.pagenum.trim());
+    const comicPage = await getComicPage(pagenum);
+    const { results } = comicPage.data;
+    const resultString = JSON.stringify(results);
+    await client.hSet('comicPages', pagenum, resultString);
+    return res.status(200).json(results);
+  } catch (e) {
+    return res.status(404).json({ error: e.message });
+  }
+});
+
+apiRouter.route('/stories/page/:pagenum').get(async (req, res) => {
+  try {
+    const pagenum = checkPage(req.params.pagenum.trim());
+    const storyPage = await getStoryPage(pagenum);
+    const { results } = storyPage.data;
+    const resultString = JSON.stringify(results);
+    await client.hSet('storyPages', pagenum, resultString);
+    return res.status(200).json(results);
   } catch (e) {
     return res.status(404).json({ error: e.message });
   }

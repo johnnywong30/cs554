@@ -1,5 +1,5 @@
 const express = require('express');
-const { checkId } = require('./misc/validate');
+const { checkId, checkPage } = require('./misc/validate');
 const configRoutes = require('./routes');
 const { client, connect } = require('./redis');
 
@@ -7,10 +7,9 @@ const app = express();
 const port = 8000;
 
 // redis middleware
-
 app.use('/api/characters/:id', async (req, res, next) => {
   try {
-    if (req.params.id.trim() === 'history') return next();
+    if (req.params.id.trim() === 'history' || req.params.id.trim() === 'page') return next();
     checkId(req.params.id.trim());
     const characterExists = await client.hExists('characters', req.params.id.trim());
     if (characterExists) {
@@ -26,6 +25,7 @@ app.use('/api/characters/:id', async (req, res, next) => {
 });
 app.use('/api/comics/:id', async (req, res, next) => {
   try {
+    if (req.params.id.trim() === 'page') return next();
     checkId(req.params.id.trim());
     const comicExists = await client.hExists('comics', req.params.id.trim());
     if (comicExists) {
@@ -40,6 +40,7 @@ app.use('/api/comics/:id', async (req, res, next) => {
 });
 app.use('/api/stories/:id', async (req, res, next) => {
   try {
+    if (req.params.id.trim() === 'page') return next();
     checkId(req.params.id.trim());
     const storyExists = await client.hExists('stories', req.params.id.trim());
     if (storyExists) {
@@ -51,6 +52,48 @@ app.use('/api/stories/:id', async (req, res, next) => {
   } catch (e) {
     return res.status(404).json({ error: e.message });
   }
+});
+app.use('/api/characters/page/:pagenum', async (req, res, next) => {
+    try {
+        checkPage(req.params.pagenum.trim());
+        const pageExists = await client.hExists('characterPages', req.params.pagenum.trim());
+        if (pageExists) {
+            const result = await client.hGet('characterPages', req.params.pagenum.trim());
+            const characterPage = JSON.parse(result);
+            return res.status(200).json(characterPage);
+        }
+        return next();
+    } catch (e) {
+        return res.status(404).json({ error: e.message });
+    }
+});
+app.use('/api/comics/page/:pagenum', async (req, res, next) => {
+    try {
+        checkPage(req.params.pagenum.trim());
+        const pageExists = await client.hExists('comicPages', req.params.pagenum.trim());
+        if (pageExists) {
+            const result = await client.hGet('comicPages', req.params.pagenum.trim());
+            const comicPage = JSON.parse(result);
+            return res.status(200).json(comicPage);
+        }
+        return next();
+    } catch (e) {
+        return res.status(404).json({ error: e.message });
+    }
+});
+app.use('/api/stories/page/:pagenum', async (req, res, next) => {
+    try {
+        checkPage(req.params.pagenum.trim());
+        const pageExists = await client.hExists('storyPages', req.params.pagenum.trim());
+        if (pageExists) {
+            const result = await client.hGet('storyPages', req.params.pagenum.trim());
+            const storyPage = JSON.parse(result);
+            return res.status(200).json(storyPage);
+        }
+        return next();
+    } catch (e) {
+        return res.status(404).json({ error: e.message });
+    }
 });
 
 app.use(express.json());
