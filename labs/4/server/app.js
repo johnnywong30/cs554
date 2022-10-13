@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const { checkId, checkPage } = require('./misc/validate');
 const configRoutes = require('./routes');
 const { client, connect } = require('./redis');
@@ -97,6 +98,7 @@ app.use('/api/stories/page/:pagenum', async (req, res, next) => {
 });
 
 app.use(express.json());
+app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 
 // routes
