@@ -5,6 +5,8 @@ import './App.css';
 function App() {
   const [state, setState] = useState({message: '', name: ''});
   const [chat, setChat] = useState([]);
+  const [room, setRoom] = useState('General');
+  const [rooms] = useState(['General', 'Dylan Regan Waiting Room', 'Patrick Hill TA Waiting Room'])
 
   const socketRef = useRef();
 
@@ -16,21 +18,36 @@ function App() {
   }, []);
 
   useEffect(() => {
-    socketRef.current.on('message', ({name, message}) => {
+    socketRef.current.on('receive-message', ({name, message}) => {
       console.log('The server has sent some data to all clients');
+      console.log(`message was from ${name}, ${message}`)
       setChat([...chat, {name, message}]);
-    });
-    socketRef.current.on('user_join', function (data) {
+    })
+    socketRef.current.on('joined-room', function (data) {
+      const { name, newRoom } = data;
       setChat([
         ...chat,
-        {name: 'ChatBot', message: `${data} has joined the chat`},
+        {name: 'ChatBot', message: `${name} has joined ${newRoom}`},
       ]);
     });
-  }, [chat]);
+  }, [chat, room]);
 
+  // user joins General chat room by default
   const userjoin = (name) => {
-    socketRef.current.emit('user_join', name);
+    const previousRoom = room;
+    const newRoom = room;
+    socketRef.current.emit('join-room', {name, previousRoom, newRoom});
   };
+
+  // event handler to manage change between chat rooms
+  const onRoomChange = (e) => {
+    setRoom(e.target.value);
+    const { name } = state;
+    const previousRoom = room;
+    const newRoom = e.target.value;
+    socketRef.current.emit('join-room', {name, previousRoom, newRoom});
+    setChat([]);
+  }
 
   const onMessageSubmit = (e) => {
     let msgEle = document.getElementById('message');
@@ -39,12 +56,14 @@ function App() {
     socketRef.current.emit('message', {
       name: state.name,
       message: msgEle.value,
+      room: room
     });
     e.preventDefault();
     setState({message: '', name: state.name});
     msgEle.value = '';
     msgEle.focus();
   };
+
 
   const renderChat = () => {
     return chat.map(({name, message}, index) => (
@@ -60,8 +79,15 @@ function App() {
     <div>
       {state.name && (
         <div className='card'>
+          <select id="room-selector" onChange={onRoomChange}>
+            {rooms.map((room) => {
+                return (
+                    <option key={room} value={room}>{room}</option>
+                )
+            })}
+        </select>
           <div className='render-chat'>
-            <h1>Chat Log</h1>
+            <h1>{room}</h1>
             {renderChat()}
           </div>
           <form onSubmit={onMessageSubmit}>
