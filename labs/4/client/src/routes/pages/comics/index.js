@@ -1,7 +1,7 @@
 import React, { useState, useEffect }from 'react';
-import { Grid, GridItem, Spinner, Center, HStack } from '@chakra-ui/react';
+import { Grid, GridItem, Spinner, Center, VStack, HStack, FormControl, FormLabel, Input } from '@chakra-ui/react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { getComicPage } from '../../../services/api';
+import { getComicPage, searchComics } from '../../../services/api';
 
 import Card from '../../../components/Card';
 import Pagination from '../../../components/Pagination';
@@ -13,6 +13,7 @@ const Comics = () => {
     const { page } = useParams();
     const [ currPage, setCurrPage ] = useState(-1);
     const [ hasNextPage, setHasNextPage ] = useState(false);
+    const [ searchTerm, setSearchTerm ] = useState('');
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -53,6 +54,23 @@ const Comics = () => {
         checkNextPage();
     }, [page])
 
+    const handleSearchTerm = async (e) => {
+        const term = e.target.value;
+        setSearchTerm(term);
+        let comics;
+        // setLoading(true);
+        try {
+            if (term.trim().length > 0) comics = await searchComics(term.trim());
+            else comics = await getComicPage(currPage);
+        } catch (e) {
+            console.log(e);
+            navigate('/error');
+        }
+        console.log(comics);
+        setData(comics);
+        // setLoading(false);
+    }
+
     
     if (loading) {
         return (
@@ -72,16 +90,22 @@ const Comics = () => {
     return (
         <>
             <Center paddingBottom={12}>
-                <HStack spacing={2}>
-                    {currPage > 1 
-                        && 
-                        <Pagination to={`/comics/page/${currPage - 1}`} text='Previous Page'/>
-                    }
-                    {hasNextPage
-                        && 
-                        <Pagination to={`/comics/page/${currPage + 1}`} text='Next Page'/>
-                    }
-                </HStack>
+                <VStack spacing={2}>
+                    <HStack spacing={2}>
+                        {(currPage > 1 && searchTerm.trim().length <= 0) 
+                            && 
+                            <Pagination to={`/comics/page/${currPage - 1}`} text='Previous Page'/>
+                        }
+                        {(hasNextPage && searchTerm.trim().length <= 0)
+                            && 
+                            <Pagination to={`/comics/page/${currPage + 1}`} text='Next Page'/>
+                        }
+                    </HStack>
+                    <FormControl>
+                        <FormLabel>Search</FormLabel>
+                        <Input placeholder='Search for a Comic' value={searchTerm} onChange={handleSearchTerm}/>
+                    </FormControl>
+                </VStack>
             </Center>
             <Grid templateColumns='repeat(4, 1fr)' gap={6}>
                 {data.map((comic) => {

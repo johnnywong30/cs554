@@ -1,7 +1,7 @@
 import React, { useState, useEffect }from 'react';
-import { Grid, GridItem, Spinner, Center, HStack } from '@chakra-ui/react';
+import { Grid, GridItem, Spinner, Center, VStack, HStack, FormControl, FormLabel, Input } from '@chakra-ui/react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { getCharacterPage } from '../../../services/api';
+import { getCharacterPage, searchCharacters } from '../../../services/api';
 
 import Card from '../../../components/Card';
 import Pagination from '../../../components/Pagination';
@@ -13,6 +13,7 @@ const Characters = () => {
     const { page } = useParams();
     const [ currPage, setCurrPage ] = useState(-1);
     const [ hasNextPage, setHasNextPage ] = useState(false);
+    const [ searchTerm, setSearchTerm ] = useState('');
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -51,8 +52,24 @@ const Characters = () => {
         }
         fetchData();
         checkNextPage();
-    }, [page])
+    }, [page, navigate])
 
+    const handleSearchTerm = async (e) => {
+        const term = e.target.value;
+        setSearchTerm(term);
+        let characters;
+        // setLoading(true);
+        try {
+            if (term.trim().length > 0) characters = await searchCharacters(term.trim());
+            else characters = await getCharacterPage(currPage);
+        } catch (e) {
+            console.log(e);
+            navigate('/error');
+        }
+        console.log(characters);
+        setData(characters);
+        // setLoading(false);
+    }
     
     if (loading) {
         return (
@@ -72,17 +89,23 @@ const Characters = () => {
     return (
         <>
             <Center paddingBottom={12}>
-                <HStack spacing={2}>
-                    {currPage > 1 
-                        && 
-                        <Pagination to={`/characters/page/${currPage - 1}`} text='Previous Page'/>
-                    }
-                    {hasNextPage
-                        && 
-                        <Pagination to={`/characters/page/${currPage + 1}`} text='Next Page'/>
-                    }
-                    <Pagination to={`/characters/history`} text='Character History'/>
-                </HStack>
+                <VStack spacing={2}>
+                    <HStack spacing={2}>
+                        {(currPage > 1 && searchTerm.trim().length <= 0) 
+                            && 
+                            <Pagination to={`/characters/page/${currPage - 1}`} text='Previous Page'/>
+                        }
+                        {(hasNextPage && searchTerm.trim().length <= 0)
+                            && 
+                            <Pagination to={`/characters/page/${currPage + 1}`} text='Next Page'/>
+                        }
+                        <Pagination to={`/characters/history`} text='Character History'/>
+                    </HStack>
+                    <FormControl>
+                        <FormLabel>Search</FormLabel>
+                        <Input placeholder='Search for a Character' value={searchTerm} onChange={handleSearchTerm}/>
+                    </FormControl>
+                </VStack>
             </Center>
             <Grid templateColumns='repeat(4, 1fr)' gap={6}>
                 {data.map((character) => {

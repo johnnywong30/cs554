@@ -1,6 +1,24 @@
 import axios from 'axios';
+import md5 from 'blueimp-md5';
 
 const API_ROUTE = '/api';
+
+const publicKey = '761aa5e8b04bbdc723cb3b2a0e732f70';
+const privateKey = '9cacff382c0038ba96f4ba30c1d69f8a934c9ca2';
+
+const getTimeStamp = () => new Date().getTime();
+
+const getHash = (ts) => {
+  const stringToHash = ts + privateKey + publicKey;
+  const hash = md5(stringToHash);
+  return hash;
+};
+
+const generateReqUrl = (baseUrl) => {
+  const ts = getTimeStamp();
+  const hash = getHash(ts);
+  return `${baseUrl}?ts=${ts}&apikey=${publicKey}&hash=${hash}`;
+};
 
 export const getCharacterHistory = async () => {
     const url = `${API_ROUTE}/characters/history`;
@@ -78,6 +96,24 @@ export const getStoryPage = async (page) => {
     }
 }
 
+export const searchCharacters = async (name) => {
+    const marvelApi = '/v1/public/characters';
+    const baseUrl = `https://gateway.marvel.com:443${marvelApi}`
+    const url = `${generateReqUrl(baseUrl)}&nameStartsWith=${name.trim()}`;
+    const { data } = await axios.get(url);
+    const results = data.data.results;
+    return results;
+}
+
+export const searchComics = async (title) => {
+    const marvelApi = '/v1/public/comics';
+    const baseUrl = `https://gateway.marvel.com:443${marvelApi}`
+    const url = `${generateReqUrl(baseUrl)}&titleStartsWith=${title.trim()}`;
+    const { data } = await axios.get(url);
+    const results = data.data.results;
+    return results;
+}
+
 const api = {
     getCharacterHistory,
     getCharacterById,
@@ -85,7 +121,9 @@ const api = {
     getStoryById,
     getCharacterPage,
     getComicPage,
-    getStoryPage
+    getStoryPage,
+    searchCharacters,
+    searchComics
 };
 
 export default api;
