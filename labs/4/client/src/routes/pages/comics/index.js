@@ -84,11 +84,11 @@ const Comics = () => {
             </Center>
             <Grid templateColumns='repeat(4, 1fr)' gap={6}>
                 {data.map((comic) => {
-                    const { id, title, description } = comic;
+                    const { id, title, description, thumbnail } = comic;
                     return (
                         <Link key={id} to={`/comics/${id}`}>
                             <GridItem w='100%' h='100%'>
-                                <Card title={title} description={description}/>
+                                <Card title={title} description={description} thumbnail={thumbnail} />
                             </GridItem>
                         </Link>
                     )
