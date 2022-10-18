@@ -13,7 +13,6 @@ const Stories = () => {
     const { page } = useParams();
     const [ currPage, setCurrPage ] = useState(-1);
     const [ hasNextPage, setHasNextPage ] = useState(false);
-    // todo search
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -25,12 +24,14 @@ const Stories = () => {
                     pagenum = Number(page);
                     setCurrPage(pagenum);
                 }
-                // todo: navigate to 404
-                // else navigate('/characters/page/1');
+                else navigate('/error');
                 const stories = await getStoryPage(pagenum);
-                setData(stories);
-                setLoading(false);
-                console.log(stories);
+                if (stories.length <= 0) navigate('/error');
+                else {
+                    setData(stories);
+                    setLoading(false);
+                    console.log(stories);
+                }
             } catch (e) {
                 console.log(e);
             }

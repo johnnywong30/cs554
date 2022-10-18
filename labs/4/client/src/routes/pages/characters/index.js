@@ -13,7 +13,6 @@ const Characters = () => {
     const { page } = useParams();
     const [ currPage, setCurrPage ] = useState(-1);
     const [ hasNextPage, setHasNextPage ] = useState(false);
-    // todo search
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -25,12 +24,14 @@ const Characters = () => {
                     pagenum = Number(page);
                     setCurrPage(pagenum);
                 }
-                // todo: navigate to 404
-                // else navigate('/characters/page/1');
+                else navigate('/error');
                 const characters = await getCharacterPage(pagenum);
-                setData(characters);
-                setLoading(false);
-                console.log(characters);
+                if (characters.length <= 0) navigate('/error');
+                else {
+                    setData(characters);
+                    setLoading(false);
+                    console.log(characters);
+                }
             } catch (e) {
                 console.log(e);
             }
@@ -80,6 +81,7 @@ const Characters = () => {
                         && 
                         <Pagination to={`/characters/page/${currPage + 1}`} text='Next Page'/>
                     }
+                    <Pagination to={`/characters/history`} text='Character History'/>
                 </HStack>
             </Center>
             <Grid templateColumns='repeat(4, 1fr)' gap={6}>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect }from 'react';
 import { Spinner, Center, HStack, VStack, Link as ChakraLink, Heading, Text, Image, Box } from '@chakra-ui/react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import { getStoryById } from '../../../services/api';
 
 
@@ -8,6 +8,7 @@ const Story = () => {
     const [ data, setData ] = useState({});
     const [ loading, setLoading ] = useState(true);
     const { id } = useParams();
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -19,6 +20,7 @@ const Story = () => {
                 setLoading(false);
             } catch (e) {
                 console.log(e);
+                navigate('/error');
             }
         }
         fetchData();

@@ -13,7 +13,6 @@ const Comics = () => {
     const { page } = useParams();
     const [ currPage, setCurrPage ] = useState(-1);
     const [ hasNextPage, setHasNextPage ] = useState(false);
-    // todo search
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -25,12 +24,14 @@ const Comics = () => {
                     pagenum = Number(page);
                     setCurrPage(pagenum);
                 }
-                // todo: navigate to 404
-                // else navigate('/characters/page/1');
+                else navigate('/error');
                 const comics = await getComicPage(pagenum);
-                setData(comics);
-                setLoading(false);
-                console.log(comics);
+                if (comics.length <= 0) navigate('/error');
+                else {
+                    setData(comics);
+                    setLoading(false);
+                    console.log(comics);
+                }
             } catch (e) {
                 console.log(e);
             }

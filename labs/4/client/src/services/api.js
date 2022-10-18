@@ -9,6 +9,7 @@ export const getCharacterHistory = async () => {
         return data;
     } catch (e) {
         console.log(e);
+        throw(e);
     }
 }
 
@@ -19,6 +20,7 @@ export const getCharacterById = async (id) => {
         return data;
     } catch (e) {
         console.log(e);
+        throw(e);
     }
 }
 
@@ -28,7 +30,7 @@ export const getComicById = async (id) => {
         const { data } = await axios.get(url);
         return data;
     } catch (e) {
-        console.log(e);
+        throw(e);
     }
 }
 
@@ -39,6 +41,7 @@ export const getStoryById = async (id) => {
         return data;
     } catch (e) {
         console.log(e);
+        throw(e);
     }
 }
 
@@ -49,6 +52,7 @@ export const getCharacterPage = async (page) => {
         return data;
     } catch (e) {
         console.log(e);
+        throw(e);
     }
 }
 
@@ -59,6 +63,7 @@ export const getComicPage = async (page) => {
         return data;
     } catch (e) {
         console.log(e);
+        throw(e);
     }
 }
 
@@ -69,6 +74,7 @@ export const getStoryPage = async (page) => {
         return data;
     } catch (e) {
         console.log(e);
+        throw(e);
     }
 }
 
