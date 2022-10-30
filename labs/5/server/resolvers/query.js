@@ -5,13 +5,14 @@ const { client } = require('../redis');
 const { checkPageNum } = require('../misc/validator')
 
 const Query = {
-    unsplashImages: async (pageNum) => {
+    unsplashImages: async (parent, args, context, info) => {
+        const { pageNum } = args
         checkPageNum(pageNum)
         const headers = {
             Authorization: `Client-ID ${ACCESS_KEY}`
         }
         const { data } = await axios.get(
-            `${unsplashUrl}/?${pageNum}`, 
+            `${unsplashUrl}/?page=${pageNum}`, 
             {headers}
         )
         const images = await Promise.all(data.map(async ({id, urls, user, description}) => {
@@ -26,15 +27,15 @@ const Query = {
         ))
         return images
     },
-    binnedImages: async () => {
+    binnedImages: async (parent, args, context, info) => {
         const binnedExists = await client.exists('binned')
-        const binnedImages = binnedExists ? await client.get('binned') : []
+        const binnedImages = binnedExists ? await client.lRange('binned', 0, -1) : []
         const images = binnedImages.map(JSON.parse)
         return images
     },
-    userPostedImages: async () => {
+    userPostedImages: async (parent, args, context, info) => {
         const postedImagesExists = await client.exists('postedImages')
-        const postedImages = postedImagesExists ? await client.get('postedImages') : []
+        const postedImages = postedImagesExists ? await client.lRange('postedImages', 0, -1) : []
         const images = postedImages.map(JSON.parse)
         return images
     }

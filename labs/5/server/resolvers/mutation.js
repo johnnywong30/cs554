@@ -10,7 +10,11 @@ const { userPostedImages } = require('./query');
 // postedImages has a corresponding hash holding ids and ImagePostStrings
 
 const Mutation = {
-    uploadImage: async (url, description, posterName) => {
+    uploadImage: async (parent, args, context, info) => {
+        const url = args.url
+        const description = args.description
+        const posterName = args.posterName
+        
         const imgUrl = checkString(url)
         const id = uuidv4()
         const ImagePost = {
@@ -26,7 +30,14 @@ const Mutation = {
         await client.lPush('postedImages', ImagePostString)
         return ImagePost
     },
-    updateImage: async (id, url, posterName, description, userPosted, binned) => {
+    updateImage: async (parent, args, context, info) => {
+        const id = args.id
+        const url = args.url
+        const posterName = args.posterName
+        const description = args.description
+        const userPosted = args.userPosted
+        const binned = args.binned
+
         const imgId = checkString(id) // unsplash id is not a uuid... will break my checkId
         const postedImgExists = await client.hExists('postedHash', uuid)
         const binnedImgExists = await client.hExists('binnedHash', uuid)
@@ -106,7 +117,9 @@ const Mutation = {
         }
         return ImagePost
     },
-    deleteImage: async (id) => {
+    deleteImage: async (parent, args, context, info) => {
+        const id = args.id
+
         const uuid = checkId(id)
         const imgExists = await client.hExists('postedHash', uuid)
         let ImagePost;
