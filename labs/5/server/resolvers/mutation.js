@@ -14,7 +14,6 @@ const Mutation = {
         
         const imgUrl = checkString(url)
         const id = uuidv4()
-        console.log(typeof id)
         const ImagePost = {
             id,
             url: imgUrl,
@@ -35,7 +34,6 @@ const Mutation = {
         const description = args.description
         const userPosted = args.userPosted
         const binned = args.binned
-        console.log(binned)
 
         const imgId = checkString(id) // unsplash id is not a uuid... will break my checkId
         const postedImgExists = await client.hExists('postedHash', imgId)
