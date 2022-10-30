@@ -73,8 +73,11 @@ const Mutation = {
             const UpdatedImagePostString = JSON.stringify(UpdatedImagePost)
             // replace it
             await client.lRem('postedImages', ImagePostString)
-            await client.lPush('postedImages', UpdatedImagePostString)
-            await client.hSet('postedHash', imgId, UpdatedImagePostString)
+            await client.hDel('postedHash', imgId)
+            if (UpdatedImagePost.userPosted) {
+                await client.lPush('postedImages', UpdatedImagePostString)
+                await client.hSet('postedHash', imgId, UpdatedImagePostString)
+            }
             ImagePost = UpdatedImagePost
         }
         if (binnedImgExists) {
