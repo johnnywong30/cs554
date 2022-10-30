@@ -1,6 +1,3 @@
-const axios = require('axios')
-const ACCESS_KEY = 'gIs9GuUEFCk2fVMWgKUxcXxSf6GN69FCtZR5F24yYV0'
-const unsplashUrl = 'https://api.unsplash.com/photos'
 const { client } = require('../redis');
 const { v4: uuidv4 } = require('uuid')
 const { checkString, checkId } = require('../misc/validator');
@@ -17,13 +14,14 @@ const Mutation = {
         
         const imgUrl = checkString(url)
         const id = uuidv4()
+        console.log(typeof id)
         const ImagePost = {
             id,
             url: imgUrl,
             posterName: posterName ? checkString(posterName) : null,
             description: description ? checkString(description) : null,
             userPosted: true,
-            binned: false
+            binned: false,
         }
         const ImagePostString = JSON.stringify(ImagePost)
         await client.hSet('postedHash', id, ImagePostString)
@@ -37,10 +35,11 @@ const Mutation = {
         const description = args.description
         const userPosted = args.userPosted
         const binned = args.binned
+        console.log(binned)
 
         const imgId = checkString(id) // unsplash id is not a uuid... will break my checkId
-        const postedImgExists = await client.hExists('postedHash', uuid)
-        const binnedImgExists = await client.hExists('binnedHash', uuid)
+        const postedImgExists = await client.hExists('postedHash', imgId)
+        const binnedImgExists = await client.hExists('binnedHash', imgId)
         let ImagePost;
         // Image not in cache
         if (!postedImgExists && !binnedImgExists) {
@@ -77,17 +76,21 @@ const Mutation = {
                 url: url ? checkString(url) : ImagePost.url,
                 posterName: posterName ? checkString(posterName) : ImagePost.posterName,
                 description: description ? checkString(description) : ImagePost.description,
-                userPosted: userPosted ? userPosted : ImagePost.userPosted,
-                binned: binned ? binned: ImagePost.binned
+                userPosted: true,
+                binned
             }
             // cache it
             const UpdatedImagePostString = JSON.stringify(UpdatedImagePost)
             // replace it
-            await client.lRem('postedImages', ImagePostString)
+            await client.lRem('postedImages', 0, ImagePostString)
             await client.hDel('postedHash', imgId)
             if (UpdatedImagePost.userPosted) {
                 await client.lPush('postedImages', UpdatedImagePostString)
                 await client.hSet('postedHash', imgId, UpdatedImagePostString)
+            }
+            if (UpdatedImagePost.binned) {
+                await client.lPush('binned', UpdatedImagePostString)
+                await client.hSet('binnedHash', imgId, UpdatedImagePostString)
             }
             ImagePost = UpdatedImagePost
         }
@@ -101,13 +104,13 @@ const Mutation = {
                 url: url ? checkString(url) : ImagePost.url,
                 posterName: posterName ? checkString(posterName) : ImagePost.posterName,
                 description: description ? checkString(description) : ImagePost.description,
-                userPosted: userPosted ? userPosted : ImagePost.userPosted,
-                binned: binned ? binned: ImagePost.binned
+                userPosted,
+                binned
             }
             // cache it
             const UpdatedImagePostString = JSON.stringify(UpdatedImagePost)
             // replace it
-            await client.lRem('binned', ImagePostString)
+            await client.lRem('binned', 0, ImagePostString)
             await client.hDel('binnedHash', imgId)
             if (UpdatedImagePost.binned) {
                 await client.lPush('binned', UpdatedImagePostString)
@@ -125,13 +128,13 @@ const Mutation = {
         let ImagePost;
         if (imgExists) {
             ImagePost = await client.hGet('postedHash', uuid)
-            await client.lRem('postedImages', ImagePost)
+            await client.lRem('postedImages', 0, ImagePost)
             await client.hDel('postedHash', uuid)
         }
         const imgBinned = await client.hExists('binnedHash', uuid)
         if (imgBinned) {
             ImagePost = await client.hGet('binnedHash', uuid)
-            await client.lRem('binned', ImagePost)
+            await client.lRem('binned', 0, ImagePost)
             await client.hDel('binnedHash', uuid)
         }
         return ImagePost

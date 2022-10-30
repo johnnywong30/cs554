@@ -38,7 +38,8 @@ const Query = {
         const postedImages = postedImagesExists ? await client.lRange('postedImages', 0, -1) : []
         const images = postedImages.map(JSON.parse)
         return images
-    }
+    },
+    
 }
 
 module.exports = Query
