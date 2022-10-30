@@ -1,6 +1,8 @@
 const { ApolloServer } = require('@apollo/server');
 const { startStandaloneServer } = require('@apollo/server/standalone');
 const resolvers = require('./resolvers')
+const { connect } = require('./redis');
+
 const PORT = 4000
 
 const typeDefs = `#graphql
@@ -57,6 +59,7 @@ const start = async () => {
     const { url } = await startStandaloneServer(server, {
         listen: { port: PORT },
     });
+    await connect();
     console.log(`🚀  Server ready at: ${url}`);
 }
 

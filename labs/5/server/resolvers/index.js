@@ -1,15 +1,9 @@
+const Query = require('./query')
+const Mutation = require('./mutation')
+
 const resolvers = {
-    Query: {
-        unsplashImages(pageNum) {
-
-        },
-        binnedImages() {
-
-        },
-        userPostedImages() {
-            
-        }
-    }
+    Query,
+    Mutation
 }
 
 module.exports = resolvers
