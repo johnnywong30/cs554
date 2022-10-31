@@ -8,7 +8,28 @@ import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 
 const client = new ApolloClient({
   uri: 'http://localhost:4000',
-  cache: new InMemoryCache(),
+  cache: new InMemoryCache({
+    // https://www.apollographql.com/docs/react/pagination/core-api/#merging-paginated-results
+      typePolicies: {
+      Query: {
+        fields: {
+          unsplashImages: {
+            keyArgs: false,
+            merge(existing = [], incoming, {args: {pageNum = 1}}) {
+              // Slicing is necessary because the existing data is
+              // immutable, and frozen in development.
+              const merged = existing ? existing.slice(0) : [];
+              const offset = pageNum <= 1 ? 0 : (pageNum - 1) * 10
+              for (let i = 0; i < incoming.length; ++i) {
+                merged[offset + i] = incoming[i];
+              }
+              return merged;
+            },
+          },
+        },
+      },
+    }
+  }),
 });
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

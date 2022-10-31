@@ -26,7 +26,7 @@ const Query = {
         }
     `,
     GET_POSTED_IMAGES: gql`
-        query BinnedImages {
+        query PostedImages {
             userPostedImages {
                 id
                 url
