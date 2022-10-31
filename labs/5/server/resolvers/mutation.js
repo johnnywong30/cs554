@@ -116,6 +116,7 @@ const Mutation = {
             }
             ImagePost = UpdatedImagePost
         }
+        console.log(ImagePost)
         return ImagePost
     },
     deleteImage: async (parent, args, context, info) => {
