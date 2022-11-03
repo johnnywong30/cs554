@@ -8,7 +8,7 @@ import { Link as RouterLink } from 'react-router-dom';
 const { GET_POSTED_IMAGES } = constants.Query
 
 const Posts = () => {
-    const { loading, data } = useQuery(GET_POSTED_IMAGES, {
+    const { loading, data, error } = useQuery(GET_POSTED_IMAGES, {
         pollInterval: 100,
     })
     return (
