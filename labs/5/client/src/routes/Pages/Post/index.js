@@ -2,14 +2,19 @@ import React, { useState } from 'react';
 import constants from '../../../constants';
 import { useMutation } from '@apollo/client';
 import { Center, FormControl, Input, FormLabel, Button, VStack, Text, Alert, AlertIcon, AlertTitle, AlertDescription } from '@chakra-ui/react'
+import ErrorAlert from '../../../components/ErrorAlert';
 const { UPLOAD_IMAGE } = constants.Mutation
+
 
 const Post = () => {
     const [ description, setDescription ] = useState('')
     const [ url, setUrl ] = useState('')
     const [ posterName, setPosterName ] = useState('')
     const [ success, setSuccess ] = useState(false)
-    const [ uploadImage, { data, loading } ] = useMutation(UPLOAD_IMAGE, {
+    const [ error, setError ] = useState(false)
+    const [ errorMsg, setErrorMsg ] = useState('')
+
+    const [ uploadImage, { loading } ] = useMutation(UPLOAD_IMAGE, {
         onCompleted: (data) => {
             setSuccess(true)
             setDescription('')
@@ -18,6 +23,18 @@ const Post = () => {
             setTimeout(() => {
                 setSuccess(false)
             }, 1000)
+        },
+        onError: (e) => {
+            setError(true)
+            setErrorMsg(e.message)
+            setDescription('')
+            setUrl('')
+            setPosterName('')
+            setTimeout(() => {
+                setError(false)
+                setErrorMsg('')
+            }, 3000)
+
         }
     })
     
@@ -68,6 +85,9 @@ const Post = () => {
                             <AlertTitle>Success!</AlertTitle>
                             <AlertDescription>You posted an Image.</AlertDescription>
                         </Alert>
+                    }
+                    { error && 
+                        <ErrorAlert title='Error!' description={errorMsg} width='300px' />
                     }
                     <FormControl marginY='10px'>
                         <FormLabel id='description-label' htmlFor='description'>Description</FormLabel>

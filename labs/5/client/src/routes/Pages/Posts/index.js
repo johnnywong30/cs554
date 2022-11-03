@@ -11,7 +11,6 @@ const Posts = () => {
     const { loading, data, error } = useQuery(GET_POSTED_IMAGES, {
         pollInterval: 100,
     })
-    console.log(error)
     return (
         <VStack spacing={4} paddingBottom='50px' marginY='20px'>
                 <Link as={RouterLink} to={'/new-post'} marginY='10px'>
