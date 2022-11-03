@@ -26,6 +26,12 @@ const client = new ApolloClient({
               return merged;
             },
           },
+        userPostedImages: {
+          keyArgs: false,
+          merge(existing = [], incoming) {
+            return incoming
+          }
+        }
         },
       },
     }

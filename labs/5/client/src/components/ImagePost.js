@@ -3,10 +3,11 @@ import { ListItem, Box, Image, Text, VStack, Button, HStack, Center } from '@cha
 import { gql, useMutation } from '@apollo/client';
 
 import constants from '../constants';
-const { UPDATE_IMAGE } = constants.Mutation;
+const { UPDATE_IMAGE, DELETE_IMAGE } = constants.Mutation;
 
 const ImagePost = ({id, url, posterName, description, userPosted, binned, ...rest}) => {
-    const [updateImage, { data, loading, error }] = useMutation(UPDATE_IMAGE);
+    const [ updateImage, { data, loading, error }] = useMutation(UPDATE_IMAGE);
+    const [ deleteImage ] = useMutation(DELETE_IMAGE);
     const [ isBinned, setIsBinned ] = useState(binned)
 
     const poster = posterName ? posterName : 'Anonymous'
@@ -25,7 +26,14 @@ const ImagePost = ({id, url, posterName, description, userPosted, binned, ...res
         }
         updateImage({variables})
     }
-    
+
+    const handleDelete = () => {
+        const variables = {
+            id
+        }
+        deleteImage({variables})
+        console.log(error)
+    }
 
     return (
         <ListItem 
@@ -51,7 +59,7 @@ const ImagePost = ({id, url, posterName, description, userPosted, binned, ...res
                     <HStack spacing={2} paddingTop={4} paddingBottom={12} height='100px'>
                         <Button colorScheme='red' variant='solid' isLoading={loading} onClick={handleBin}>{binText}</Button>
                         {   userPosted && 
-                            <Button variant='ghost'>Delete Post</Button>
+                            <Button variant='ghost' onClick={handleDelete}>Delete Post</Button>
                         }
                     </HStack>
                 </VStack>
