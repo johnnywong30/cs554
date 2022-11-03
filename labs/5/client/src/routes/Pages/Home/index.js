@@ -9,7 +9,7 @@ const { GET_UNSPLASH_IMAGES } = constants.Query
 
 const Home = () => {
     const [ pageNum, setPageNum ] = useState(1)
-    const { loading, data, fetchMore} = useQuery(GET_UNSPLASH_IMAGES, {
+    const { loading, data, error, fetchMore} = useQuery(GET_UNSPLASH_IMAGES, {
         variables: {pageNum}
     });
 
@@ -21,7 +21,7 @@ const Home = () => {
 
     return (
         <VStack spacing={4} paddingBottom='50px'>
-            <ImagePostList images={data?.unsplashImages ? data.unsplashImages : []} />
+            <ImagePostList images={data?.unsplashImages ? data.unsplashImages : []} error={error} />
             { loading && <Loading loading={loading} /> }
             <Button variant='solid' width='550px' marginBottom='25px' onClick={handleGetMore}>Get More Images</Button>
         </VStack >
