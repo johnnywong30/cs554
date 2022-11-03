@@ -5,6 +5,7 @@ import Bin from './Pages/Bin'
 import Home from './Pages/Home'
 import Post from './Pages/Post'
 import Posts from './Pages/Posts'
+import Error from '../components/Error';
 
 const Routes = () => {
     return (
@@ -13,7 +14,7 @@ const Routes = () => {
             <Route path='/my-bin' element={<Bin />} />
             <Route path='/my-posts' element={<Posts />} />
             <Route path='/new-post' element={<Post />} />
-            {/* <Route path='*' element={<NotFound />} /> */}
+            <Route path='*' element={<Error />} />
         </Switch>
     )
 }

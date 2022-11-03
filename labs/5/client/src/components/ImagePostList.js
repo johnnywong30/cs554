@@ -4,7 +4,6 @@ import ImagePost from './ImagePost';
 import { v4 as uuidv4 } from 'uuid'
 
 const ImagePostList = ({images, ...rest}) => {
-    console.log(images)
     return (
         <Center paddingTop={6}>
             <UnorderedList listStyleType='none' spacing={4}>

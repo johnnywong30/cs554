@@ -12,7 +12,7 @@ const Posts = () => {
         pollInterval: 100,
     })
     return (
-        <VStack spacing={4} paddingBottom='50px'>
+        <VStack spacing={4} paddingBottom='50px' marginY='20px'>
                 <Link as={RouterLink} to={'/new-post'} marginY='10px'>
                     <Center w='500px' h='50px' bg='red.500' 
                             border='1px' shadow='md' borderColor='red.600' 

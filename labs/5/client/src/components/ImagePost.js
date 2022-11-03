@@ -32,7 +32,6 @@ const ImagePost = ({id, url, posterName, description, userPosted, binned, ...res
             id
         }
         deleteImage({variables})
-        console.log(error)
     }
 
     return (
