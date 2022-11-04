@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import ImagePostList from '../../../components/ImagePostList';
-import { useQuery, gql } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import constants from '../../../constants';
 import Loading from '../../../components/Loading';
 import { Button, VStack } from '@chakra-ui/react'
