@@ -18,6 +18,7 @@ const startApolloServer = async () => {
     await connect();
     // start Express server
     const app = express();
+    app.use(cors());
     const httpServer = http.createServer(app);
     // The ApolloServer constructor requires two parameters: your schema
     // definition and your set of resolvers.
@@ -33,7 +34,6 @@ const startApolloServer = async () => {
     app.use(express.json());
     app.use(
         '/graphql',
-        cors(),
         json(),
         expressMiddleware(server, {
             context: async ({ req }) => ({ token: req.headers.token }),

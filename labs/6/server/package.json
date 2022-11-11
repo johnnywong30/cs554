@@ -12,6 +12,7 @@
     "GraphQL",
     "PokemonApi"
   ],
+  "proxy": "http://localhost:3000",
   "author": "Johnny Wong 10446964",
   "license": "ISC",
   "dependencies": {

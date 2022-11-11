@@ -11,7 +11,7 @@ const Home = () => {
                 the <a href='https://pokeapi.co/'>pokeapi</a> and create trainers to catch them.
             </p>
             <Button variant="info" as={Link} to='/trainers' className='w-25 mx-auto'>Get Started</Button>
-            <Button variant="secondary" as={Link} to='/pokemon' className='w-25 mx-auto'>View Pokemon</Button>
+            <Button variant="secondary" as={Link} to='/pokemon/page/1' className='w-25 mx-auto'>View Pokemon</Button>
         </Stack>
     )
 }

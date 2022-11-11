@@ -15,7 +15,7 @@ const PokemonNav = () => {
                     <Nav className="me-auto">
                         <Nav.Link as={Link} to='/'>Home</Nav.Link>
                         <Nav.Link as={Link} to='/trainers'>Trainers</Nav.Link>
-                        <Nav.Link as={Link} to='/pokemon'>Pokémon</Nav.Link>
+                        <Nav.Link as={Link} to='/pokemon/page/1'>Pokémon</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
             </Container>
