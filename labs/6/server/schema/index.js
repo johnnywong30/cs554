@@ -1,7 +1,5 @@
 const resolvers = require('../resolvers')
 
-// define Pokemon
-// define Query
 const typeDefs = `#graphql
     type Query {
         pokemonPage(pagenum: Int): [Pokemon]
