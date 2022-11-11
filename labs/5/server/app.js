@@ -18,7 +18,7 @@ const typeDefs = `#graphql
         posterName: String!
         description: String
         userPosted: Boolean!
-        binned: Boolean!,
+        binned: Boolean!
     }
 
     type Mutation {
