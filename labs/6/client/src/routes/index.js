@@ -10,12 +10,9 @@ const Routes = () => {
         <Switch>
             <Route path='/' element={<Home />} />
             <Route path='/pokemon/page/:pagenum' element={<PokemonPage />} />
-            <Route path='/pokemon/:id'
-            {/* <Route path='/' element={<Home />} />
-            <Route path='/my-bin' element={<Bin />} />
-            <Route path='/my-posts' element={<Posts />} />
-            <Route path='/new-post' element={<Post />} />
-            <Route path='*' element={<Error />} /> */}
+            <Route path='/pokemon/:id' element={<PokemonDetails />} />
+            <Route path='/trainers' element={<Home />} />
+            {/* <Route path='*' element={<Error />} /> */} */}
         </Switch>
     )
 }

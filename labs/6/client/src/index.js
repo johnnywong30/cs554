@@ -7,22 +7,22 @@ import reportWebVitals from './reportWebVitals';
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 import { Provider } from 'react-redux';
 import store from './redux/store'
-const root = ReactDOM.createRoot(document.getElementById('root'));
+
 
 const client = new ApolloClient({
-  uri: 'http://localhost:4000',
-  cache: new InMemoryCache({
-
-  })
+  uri: 'http://localhost:4000/graphql',
+  cache: new InMemoryCache()
 })
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
   // <React.StrictMode>
-    <ApolloProvider client={client}>
-      <Provider store={store}>
+    <Provider store={store}>
+      <ApolloProvider client={client}>
         <App />
-      </Provider>
-    </ApolloProvider>
+      </ApolloProvider>
+    </Provider>
   // </React.StrictMode>
 );
 
