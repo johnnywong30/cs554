@@ -5,10 +5,11 @@ import Badge from 'react-bootstrap/Badge';
 import { capitalize } from '../constants/helpers';
 
 const PokemonAbility = ({name, is_hidden, slot}) => {
+    const abilityName = name.split('-').map(capitalize).join(' ')
     return (
         <Card style={{width: '12rem'}}>
             <Card.Body>
-                <Card.Title style={{color: '#007acc'}}>{capitalize(name)}</Card.Title>
+                <Card.Title style={{color: '#007acc'}}>{abilityName}</Card.Title>
                 <Card.Text>Slot {slot}</Card.Text>
                 {
                     is_hidden &&
