@@ -25,7 +25,7 @@ const trainerReducer = (state = INITIAL_STATE, action) => {
                 trainers: state.trainers.filter(({id}) => id !== payload)
             }
 
-        // add from party
+        // add to party
         case 'ADD_TO_TRAINER_PARTY':
             return {
                 ...state,

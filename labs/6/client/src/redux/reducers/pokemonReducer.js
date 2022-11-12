@@ -1,5 +1,3 @@
-import { v4 as uuidv4 } from 'uuid';
-
 const INITIAL_STATE = {
     party: [] // list of ids for current party
 }
