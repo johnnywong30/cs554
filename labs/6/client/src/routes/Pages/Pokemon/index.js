@@ -3,7 +3,6 @@ import { useQuery } from '@apollo/client';
 import constants from '../../../constants';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { v4 as uuidv4 } from 'uuid';
 import Stack from 'react-bootstrap/Stack';
 import PageButton from "../../../components/PageButton";
 import PokemonGrid from "../../../components/PokemonGrid";
