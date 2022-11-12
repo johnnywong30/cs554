@@ -35,7 +35,7 @@ const PokemonCard = ({id, name, sprites, types}) => {
     }
     return (
         <Col>
-            <Card style={{ width: '18rem' }} className='my-3 p-2'>
+            <Card style={{ width: '18rem' }} className='my-3 p-2 mx-auto'>
                 <Card.Body as={Link} to={`/pokemon/${id}`} className='p-3 cardlink'>
                     <Card.Img variant="top" src={sprites.official_artwork} alt={`${name}-artwork`} />
                     <Card.Title>{capitalize(name)}</Card.Title>
@@ -51,14 +51,14 @@ const PokemonCard = ({id, name, sprites, types}) => {
                     </Stack>
                 </Card.Body>
                 {
-                        selectedTrainer &&
-                        <Button 
+                    selectedTrainer &&
+                    <Button 
                         variant='outline-primary' 
                         className='my-2 mx-auto w-100'
                         onClick={inParty ? handleRelease : handleCatch}
-                        >
-                            {inParty ? 'Release' : 'Catch'}
-                        </Button>
+                    >
+                        {inParty ? 'Release' : 'Catch'}
+                    </Button>
                 }
             </Card>
         </Col>

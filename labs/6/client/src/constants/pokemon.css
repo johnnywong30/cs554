@@ -9,6 +9,11 @@
   color: #696969;
 }
 
+.progress-bar {
+  color: #122231;
+  text-align: center;
+}
+
 .bg-normal {
   background-color: #7c7a0b !important;
 }

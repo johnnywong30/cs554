@@ -12,7 +12,7 @@ const Routes = () => {
             <Route path='/pokemon/page/:pagenum' element={<PokemonPage />} />
             <Route path='/pokemon/:id' element={<PokemonDetails />} />
             <Route path='/trainers' element={<Home />} />
-            {/* <Route path='*' element={<Error />} /> */} */}
+            {/* <Route path='*' element={<Error />} /> */}
         </Switch>
     )
 }
