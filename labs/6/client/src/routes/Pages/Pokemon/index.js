@@ -7,6 +7,7 @@ import { v4 as uuidv4 } from 'uuid';
 import Stack from 'react-bootstrap/Stack';
 import PageButton from "../../../components/PageButton";
 import PokemonGrid from "../../../components/PokemonGrid";
+import Loading from "../../../components/Loading";
 
 const { GET_POKEMON_PAGE } = constants.Query;
 
@@ -14,16 +15,20 @@ const PokemonPage = () => {
     const { pagenum } = useParams();
     const navigate = useNavigate();
     const [ hasNext, setHasNext ] = useState(false);
-    const { loading, data, error } = useQuery(GET_POKEMON_PAGE, {
-        variables: {pagenum: Number(pagenum)}
+    const { loading, data } = useQuery(GET_POKEMON_PAGE, {
+        variables: {pagenum: Number(pagenum)},
+        onError: e => {
+            navigate('/error');
+        }            
     })
     useEffect(() => {
         // todo do error route
         if (Number(pagenum) <= 0) navigate('/error');
         const checkNextPage = async () => {
-            const url = `http://localhost:4000/pokemon/page/${pagenum}`
+            const url = `http://localhost:4000/pokemon/page/${Number(pagenum) + 1}`
             const { data } = await axios.get(url);
-            setHasNext(data.length > 0);
+            const hasNextPage = data.length > 0;
+            setHasNext(hasNextPage);
         }
         checkNextPage();
     }, [pagenum])
@@ -35,6 +40,10 @@ const PokemonPage = () => {
                 {hasNext && <PageButton to={`/pokemon/page/${Number(pagenum) + 1}`} text='Next Page'/>}
             </Stack>
             <PokemonGrid pokemon={data?.pokemonPage ? data?.pokemonPage : []} />
+            {
+                loading &&
+                <Loading />
+            }
             {
                 data?.pokemonPage 
                 &&

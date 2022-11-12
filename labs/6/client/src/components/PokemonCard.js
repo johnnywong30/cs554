@@ -16,7 +16,7 @@ const PokemonCard = ({id, name, sprites, types}) => {
     return (
         <Col>
             <Card style={{ width: '18rem' }} className='my-3' >
-                <Card.Img variant="top" src={sprites.official_artwork} />
+                <Card.Img variant="top" src={sprites.official_artwork} alt={`${name}-artwork`} />
                 <Card.Body>
                     <Card.Title>{capitalize(name)}</Card.Title>
                     <Card.Text>#{id}</Card.Text>
