@@ -17,12 +17,15 @@ const PokemonPage = () => {
     const [ hasNext, setHasNext ] = useState(false);
     const { loading, data } = useQuery(GET_POKEMON_PAGE, {
         variables: {pagenum: Number(pagenum)},
+        onCompleted: data => {
+            // infinite loops if user tries to go back via back arrow
+            if (data?.pokemonPage.length <= 0) navigate('/error');
+        },
         onError: e => {
             navigate('/error');
         }            
     })
     useEffect(() => {
-        // todo do error route
         if (Number(pagenum) <= 0) navigate('/error');
         const checkNextPage = async () => {
             const url = `http://localhost:4000/pokemon/page/${Number(pagenum) + 1}`

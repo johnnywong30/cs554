@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useQuery } from '@apollo/client';
 import constants from '../../../constants';
 import Stack from 'react-bootstrap/Stack';
 import Loading from "../../../components/Loading";
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 
 import PokemonCard from "../../../components/PokemonCard";
@@ -15,11 +15,13 @@ const { GET_POKEMON } = constants.Query;
 
 const PokemonDetails = () => {
     const { id } = useParams();
+    const navigate = useNavigate();
     const { loading, data } = useQuery(GET_POKEMON, {
-        variables: {id}
+        variables: {id},
+        onError: e => {
+            navigate('/error')
+        }
     })
-
-    console.log(data)
 
     return (
         <Stack direction="horizontal" gap={4} className='mx-auto'>
