@@ -9,6 +9,7 @@ import { v4 as uuidv4 } from 'uuid';
 import PokemonCard from "../../../components/PokemonCard";
 import PokemonAbility from "../../../components/PokemonAbility";
 import PokemonStats from "../../../components/PokemonStats";
+import PokemonSprites from "../../../components/PokemonSprites";
 
 const { GET_POKEMON } = constants.Query;
 
@@ -28,26 +29,30 @@ const PokemonDetails = () => {
             }
             { 
                 data?.pokemonById &&
-                <Stack direction="horizontal" gap={4} className='mx-auto'>
-                    <PokemonCard {...data?.pokemonById} />
-                    <Stack direction="vertical" gap={2} className='mx-auto py-4'> 
-                        <p className="h3 text-center">Abilities</p>
-                        {
-                            data?.pokemonById?.abilities.map(ability => {
-                                return (
-                                    <React.Fragment key={uuidv4()}>
-                                        <PokemonAbility {...ability} />
-                                    </React.Fragment>
-                                )
-                            })
-                        }
+                <Stack direction="vertical" gap={2} className='mx-auto py-4'>
+                    <Stack direction="horizontal" gap={4} className='mx-auto'>
+                        <PokemonCard {...data?.pokemonById} />
+                        <Stack direction="vertical" gap={2} className='mx-auto py-4'> 
+                            <p className="h3 text-center">Abilities</p>
+                            {
+                                data?.pokemonById?.abilities.map(ability => {
+                                    return (
+                                        <React.Fragment key={uuidv4()}>
+                                            <PokemonAbility {...ability} />
+                                        </React.Fragment>
+                                    )
+                                })
+                            }
+                        </Stack>
+                        <Stack direction="vertical" gap={2} className='mx-auto py-4'>
+                            <p className="h3 text-center">Stats</p>
+                            <PokemonStats stats={data?.pokemonById?.stats} />
+                        </Stack>
                     </Stack>
-                    <Stack direction="vertical" gap={2} className='mx-auto py-4'>
-                        <p className="h3 text-center">Stats</p>
-                        <PokemonStats stats={data?.pokemonById?.stats} />
-                    </Stack>
-                    
+                    <p className="h3 text-center">Sprites</p>
+                    <PokemonSprites sprites={data?.pokemonById?.sprites} />
                 </Stack>
+                
             }
         </Stack>
     )
