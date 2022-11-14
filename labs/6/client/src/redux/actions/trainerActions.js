@@ -1,6 +1,6 @@
-export const addTrainer = name => ({
+export const addTrainer = ({name, trainerImageSrc}) => ({
     type: 'ADD_TRAINER',
-    payload: name
+    payload: {name, trainerImageSrc}
 })
 
 export const deleteTrainer = id => ({
@@ -8,12 +8,12 @@ export const deleteTrainer = id => ({
     payload: id
 })
 
-export const addToTrainerParty = (id, trainerId) => ({
+export const catchPokemon = (id, trainerId) => ({
     type: 'ADD_TO_TRAINER_PARTY',
     payload: {id, trainerId}
 })
 
-export const removeFromTrainerParty = (id, trainerId) => ({
+export const releasePokemon = (id, trainerId) => ({
     type: 'REMOVE_FROM_TRAINER_PARTY',
     payload: {id, trainerId}
 })
@@ -26,8 +26,8 @@ export const selectTrainer = id => ({
 const actions = {
     addTrainer,
     deleteTrainer,
-    addToTrainerParty,
-    removeFromTrainerParty,
+    catchPokemon,
+    releasePokemon,
     selectTrainer
 }
 

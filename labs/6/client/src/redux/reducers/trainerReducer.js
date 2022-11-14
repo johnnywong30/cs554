@@ -11,10 +11,11 @@ const trainerReducer = (state = INITIAL_STATE, action) => {
     switch(type) {
         // new trainer
         case 'ADD_TRAINER':
-            const trainer = new Trainer(payload);
+            const trainer = new Trainer(payload.name, payload.trainerImageSrc);
             return {
                 ...state,
-                trainers: [...state.trainers, trainer]
+                trainers: [...state.trainers, trainer],
+                selectedTrainer: trainer.id
             }
 
         // remove trainer
