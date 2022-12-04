@@ -1,0 +1,26 @@
+@import "./src/styles/bootstrap/scss/bootstrap";
+@import "variables";
+.bg-lighter {
+  background-color: $body-background;
+}
+
+.nav {
+  .nav-item {
+    .nav-link-blue {
+      color: $blue-sapphire;
+      &:hover {
+        color: $blue-l;
+      }
+    }
+  }
+
+  .#{$nav-icon-class} {
+    margin-left: 5px;
+    margin-right: 5px;
+  }
+
+  span.#{$nav-text-class} {
+    margin-left: 2px;
+    @include hidden($sm);
+  }
+}

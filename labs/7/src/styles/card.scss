@@ -1,0 +1,15 @@
+@import "./src/styles/bootstrap/scss/bootstrap";
+@import "variables";
+
+.card {
+  width: 100%;
+  background-color: lighten($body-background, 5%);
+}
+
+.card-body-custom {
+  color: darken($blue-sapphire, 5%);
+  .card-title-custom {
+    color: $black-d;
+    text-decoration: none;
+  }
+}

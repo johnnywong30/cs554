@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Beebo's Store</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+    />
+    <link rel="stylesheet" href="/public/css/styles.min.css" />
+  </head>
+  <body>
+    <div class="container-fluid overflow-hidden">
+      <div class="row vh-100 overflow-auto">
+        <nav
+          class="col-12 col-sm-3 col-xl-2 px-sm-2 px-0 bg-lighter d-flex sticky-top"
+        >
+          <div
+            class="d-flex flex-sm-column flex-row flex-grow-1 align-items-center align-items-sm-start pt-2 text-white"
+          >
+            <a
+              href="/"
+              class="d-flex align-items-center px-4 pb-sm-3 mb-md-0 me-md-auto text-dark text-decoration-none"
+            >
+              <span>BeeboStore</span>
+            </a>
+            <ul
+              class="nav flex-sm-column flex-row flex-md-nowrap flex-shrink-1 flex-sm-grow-0 flex-grow-1 mb-sm-auto mb-0 justify-content-center align-items-center align-items-sm-start"
+              id="menu"
+            >
+              <li class="nav-item">
+                <a class="nav-link nav-link-blue" href="#beebosaur">
+                  <span
+                    class="fa-solid fa-person-breastfeeding nav-icon"
+                  ></span>
+                  <span class="nav-text hidden-xs">Beebosaur</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link nav-link-blue" href="#chinnersaur">
+                  <span class="fa-solid fa-person-pregnant nav-icon"></span>
+                  <span class="nav-text hidden-xs">Chinnersaur</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link nav-link-blue" href="#mattiosaur">
+                  <span class="fa-solid fa-cheese nav-icon"></span>
+                  <span class="nav-text hidden-xs">Mattiosaur</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link nav-link-blue" href="#scoobasaur">
+                  <span class="fa-solid fa-dog nav-icon"></span>
+                  <span class="nav-text hidden-xs">Scoobasaur</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link nav-link-blue" href="#sophiasaur">
+                  <span class="fa-solid fa-cat nav-icon"></span>
+                  <span class="nav-text hidden-xs">Sophiasaur</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link nav-link-blue" href="#jeansysaur">
+                  <span class="fa-solid fa-person-skating nav-icon"></span>
+                  <span class="nav-text hidden-xs">Jeansysaur</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link nav-link-blue" href="#chambersaur">
+                  <span class="fa-solid fa-person-rifle nav-icon"></span>
+                  <span class="nav-text hidden-xs">Chambersaur</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link nav-link-blue" href="#jettasaur">
+                  <span class="fa-solid fa-jet-fighter nav-icon"></span>
+                  <span class="nav-text hidden-xs">Jettasaur</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link nav-link-blue" href="#omenosaur">
+                  <span class="fa-solid fa-ghost nav-icon"></span>
+                  <span class="nav-text hidden-xs">Omenosaur</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link nav-link-blue" href="#razeysaur">
+                  <span class="fa-solid fa-bomb nav-icon"></span>
+                  <span class="nav-text hidden-xs">Razeysaur</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+        <div class="col d-flex flex-column h-sm-100">
+          <main class="row overflow-auto">
+            <div class="col pt-4">
+              <h1>Welcome to Beebo's Store</h1>
+              <p class="lead">
+                Where we sell Beebo's favorite toys! Manufactured by Beebis Inc.
+              </p>
+              <hr />
+              <div class="row">
+                <div class="col-12 col-md-6 col-lg-4 my-2">
+                  <div class="card">
+                    <div class="card-body card-body-custom">
+                      <a class="card-title card-title-custom" name="beebosaur">
+                        Beebosaur
+                      </a>
+                      <p class="card-text">
+                        Beebosaurs are reckless and take many risks. They are
+                        often left disappointed in their endeavor to ego peak,
+                        but are relentless in their effort to win RR.
+                      </p>
+                      <button
+                        type="button"
+                        data-bs-toggle="modal"
+                        data-bs-target="#beebosaurModal"
+                        class="btn btn-info"
+                      >
+                        Beebal
+                      </button>
+                    </div>
+                    <img
+                      class="card-img-bottom"
+                      src="/public/imgs/beebosaur.jpeg"
+                      alt="Beebosaur"
+                    />
+                  </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4 my-2">
+                  <div class="card">
+                    <div class="card-body card-body-custom">
+                      <a
+                        class="card-title card-title-custom"
+                        name="chinnersaur"
+                      >
+                        Chinnersaur
+                      </a>
+                      <p class="card-text">
+                        Chinnersaurs are Chamber mains and are sad at the
+                        constant nerfs of their hero. They end up in extremely
+                        difficult lobbies when queuing up with Beebosaurs for
+                        whatever reason.
+                      </p>
+                      <button
+                        type="button"
+                        data-bs-toggle="modal"
+                        data-bs-target="#chinnersaurModal"
+                        class="btn btn-info"
+                      >
+                        Chinnal
+                      </button>
+                    </div>
+                    <img
+                      class="card-img-bottom"
+                      src="/public/imgs/chinnersaur.png"
+                      alt="Chinnersaur"
+                    />
+                  </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4 my-2">
+                  <div class="card">
+                    <div class="card-body card-body-custom">
+                      <a class="card-title card-title-custom" name="mattiosaur">
+                        Mattiosaur
+                      </a>
+                      <p class="card-text">
+                        Mattiosaurs are always doing computer vision homework,
+                        pretending to sleep, or eating pretzals and Nutella at
+                        the dinner table. They refuse to play Valosaur with
+                        their comrades after 9pm.
+                      </p>
+                      <button
+                        type="button"
+                        data-bs-toggle="modal"
+                        data-bs-target="#mattiosaurModal"
+                        class="btn btn-info"
+                      >
+                        Mattal
+                      </button>
+                    </div>
+                    <img
+                      class="card-img-bottom"
+                      src="/public/imgs/mattiosaur.jpeg"
+                      alt="Mattiosaur"
+                    />
+                  </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4 my-2">
+                  <div class="card">
+                    <div class="card-body card-body-custom">
+                      <a class="card-title card-title-custom" name="scoobasaur">
+                        Scoobasaur
+                      </a>
+                      <p class="card-text">
+                        Scoobasaurs are always on the grind for RR whenever they
+                        aren't playing Minecraft. Scoobasaurs can be seen on
+                        fire on Bind or ice cold in Icebox. When they catch
+                        heat, they will top frag their way to +10 RR.
+                      </p>
+                      <button
+                        type="button"
+                        data-bs-toggle="modal"
+                        data-bs-target="#scoobasaurModal"
+                        class="btn btn-info"
+                      >
+                        Scoobal
+                      </button>
+                    </div>
+                    <img
+                      class="card-img-bottom"
+                      src="/public/imgs/scoobasaur.jpeg"
+                      alt="Scoobasaur"
+                    />
+                  </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4 my-2">
+                  <div class="card">
+                    <div class="card-body card-body-custom">
+                      <a class="card-title card-title-custom" name="sophiasaur">
+                        Sophiasaur
+                      </a>
+                      <p class="card-text">
+                        Sophiasaurs frog their way into Hookah, meowing at all
+                        low Elosaurs with their SOL Vandals. The species has
+                        recently fallen out of Ascendant. They currently have no
+                        hope of returning to their peak form due to their old
+                        age.
+                      </p>
+                      <button
+                        type="button"
+                        data-bs-toggle="modal"
+                        data-bs-target="#sophiasaurModal"
+                        class="btn btn-info"
+                      >
+                        Meowal
+                      </button>
+                    </div>
+                    <img
+                      class="card-img-bottom"
+                      src="/public/imgs/sophiasaur.jpeg"
+                      alt="Sophiasaur"
+                    />
+                  </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4 my-2">
+                  <div class="card">
+                    <div class="card-body card-body-custom">
+                      <a class="card-title card-title-custom" name="jeansysaur">
+                        Jeansysaur
+                      </a>
+                      <p class="card-text">
+                        Jeansysaurs fail to provide themselves with sufficient
+                        nutrients to meow into Valosaur with their comrades.
+                        They are often seen using the default weapon, the
+                        Classic Projectile Vomit, with no regard for human life.
+                      </p>
+                      <button
+                        type="button"
+                        data-bs-toggle="modal"
+                        data-bs-target="#jeansysaurModal"
+                        class="btn btn-info"
+                      >
+                        Jeansal
+                      </button>
+                    </div>
+                    <img
+                      class="card-img-bottom"
+                      src="/public/imgs/jeansysaur.jpeg"
+                      alt="Jeansysaur"
+                    />
+                  </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4 my-2">
+                  <div class="card">
+                    <div class="card-body card-body-custom">
+                      <a
+                        class="card-title card-title-custom"
+                        name="chambersaur"
+                      >
+                        Chambersaur
+                      </a>
+                      <p class="card-text">
+                        Chambersaurs were often seen frogging in most off-angles
+                        due to their ability to meow out in an instant into a
+                        new location. They would pick off most low Elosaurs that
+                        fail to frog them, especially Beebosaurs.
+                      </p>
+                      <button
+                        type="button"
+                        data-bs-toggle="modal"
+                        data-bs-target="#chambersaurModal"
+                        class="btn btn-info"
+                      >
+                        Chambal
+                      </button>
+                    </div>
+                    <img
+                      class="card-img-bottom"
+                      src="/public/imgs/chambersaur.jpeg"
+                      alt="Chambersaur"
+                    />
+                  </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4 my-2">
+                  <div class="card">
+                    <div class="card-body card-body-custom">
+                      <a class="card-title card-title-custom" name="jettasaur">
+                        Jettasaur
+                      </a>
+                      <p class="card-text">
+                        Jettasaurs used to be eaten by Beebosaurs in their
+                        prime. However, Beebosaurs could not stand the test of
+                        time and are now being out frogged by mature Jettasaurs
+                        in Diamond and above.
+                      </p>
+                      <button
+                        type="button"
+                        data-bs-toggle="modal"
+                        data-bs-target="#jettasaurModal"
+                        class="btn btn-info"
+                      >
+                        Jettal
+                      </button>
+                    </div>
+                    <img
+                      class="card-img-bottom"
+                      src="/public/imgs/jettasaur.jpeg"
+                      alt="Jettasaur"
+                    />
+                  </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4 my-2">
+                  <div class="card">
+                    <div class="card-body card-body-custom">
+                      <a class="card-title card-title-custom" name="omenosaur">
+                        Omenosaur
+                      </a>
+                      <p class="card-text">
+                        Omenosaurs used to be Beebosaurs' favorite friends in
+                        the past. However, Omenosaurs started to meow and frog
+                        inside of Beebosaurs with their teleportation skills.
+                        Beebosaurs and Omenosaurs are no longer friends.
+                      </p>
+                      <button
+                        type="button"
+                        data-bs-toggle="modal"
+                        data-bs-target="#omenosaurModal"
+                        class="btn btn-info"
+                      >
+                        Omenal
+                      </button>
+                    </div>
+                    <img
+                      class="card-img-bottom"
+                      src="/public/imgs/omenosaur.jpeg"
+                      alt="Omenosaur"
+                    />
+                  </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4 my-2">
+                  <div class="card">
+                    <div class="card-body card-body-custom">
+                      <a class="card-title card-title-custom" name="razeysaur">
+                        Razeysaur
+                      </a>
+                      <p class="card-text">
+                        Razeysaurs are often seen boom booming into site with no
+                        regard for their life. They are often shot out of the
+                        air by high Elosaurs who play Valosaur way too much.
+                        Beebosaurs enjoy meowing at Razeysaurs.
+                      </p>
+                      <button
+                        type="button"
+                        data-bs-toggle="modal"
+                        data-bs-target="#razeysaurModal"
+                        class="btn btn-info"
+                      >
+                        Razal
+                      </button>
+                    </div>
+                    <img
+                      class="card-img-bottom"
+                      src="/public/imgs/razeysaur.png"
+                      alt="Razeysaur"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </main>
+
+          <!-- Modals -->
+          <div
+            class="modal fade"
+            id="beebosaurModal"
+            tabindex="-1"
+            aria-labelledby="beebosaurModal"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title" id="beebosaurModalLabel">
+                    Beebosaur
+                  </h1>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <div class="modal-body">
+                  Beebosaurs have been awarded with Diamond 1 Dinosaur rankings
+                  for no reason. Beebosaurs have been an ancient breed lost to
+                  time, but have arisen from the dead to return to the grounds
+                  of Valosaur. They always bottom frag in their lobbies now,
+                  unadjusted to the new methods of peeking and entrying. They
+                  can still aim duel, but that's about it.
+                </div>
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-info"
+                    data-bs-dismiss="modal"
+                  >
+                    Close
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="modal fade"
+            id="chinnersaurModal"
+            tabindex="-1"
+            aria-labelledby="chinnersaurModal"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title" id="chinnersaurModalLabel">
+                    Chinnersaur
+                  </h1>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <div class="modal-body">
+                  Chinnersaurs have been awarded with Platinum 2 Dinosaur
+                  rankings for their effort and efficiency as Chambersaur
+                  fanatics. Chinnersaurs enjoy roaming the grounds of Valosaur
+                  for fun and do not take the competition too seriously. This
+                  infuriates the likes of high Elosaurs, whom Chinnersaurs laugh
+                  at for taking Valosaur too seriously.
+                </div>
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-info"
+                    data-bs-dismiss="modal"
+                  >
+                    Close
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="modal fade"
+            id="mattiosaurModal"
+            tabindex="-1"
+            aria-labelledby="mattiosaurModal"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title" id="mattiosaurModalLabel">
+                    Mattiosaur
+                  </h1>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <div class="modal-body">
+                  Mattiosaurs have been awarded with Gold 3 Dinosaur rankings
+                  for their efforts at the dinner table. Mattiosaurs enjoy
+                  eating Cheez It Puffs for breakfast, lunch, dinner, and
+                  dessert. They are fiends for snacks and will eat any and all
+                  off of your hands.
+                </div>
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-info"
+                    data-bs-dismiss="modal"
+                  >
+                    Close
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="modal fade"
+            id="scoobasaurModal"
+            tabindex="-1"
+            aria-labelledby="scoobasaurModal"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title" id="scoobasaurModalLabel">
+                    Scoobasaur
+                  </h1>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <div class="modal-body">
+                  Scoobasaurs have been awarded with Platinum 1 Dinosaur
+                  rankings for their skills in Valosaur. They desire to hit
+                  Diamond like their comrades, but are unsure where to place
+                  themselves on the scoreboard. The game itself often decides to
+                  place them towards the bottom and there's nothing Scoobasaurs
+                  can do about it. Scoobasaurs now administer Minecraft servers.
+                </div>
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-info"
+                    data-bs-dismiss="modal"
+                  >
+                    Close
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="modal fade"
+            id="sophiasaurModal"
+            tabindex="-1"
+            aria-labelledby="sophiasaurModal"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title" id="sophiasaurModalLabel">
+                    Sophiasaur
+                  </h1>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <div class="modal-body">
+                  Sophiasaurs have been Ascendant 1 Dinosaurs in the past, but
+                  their reign has fallen due to unforseen circumstances. They
+                  can now be found gulping sass or playing Fortnite. The general
+                  public is saddened by their loss, but they still demand an
+                  appearance from Sophiasaurs on the dinner calendar.
+                </div>
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-info"
+                    data-bs-dismiss="modal"
+                  >
+                    Close
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="modal fade"
+            id="jeansysaurModal"
+            tabindex="-1"
+            aria-labelledby="jeansysaurModal"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title" id="jeansysaurModalLabel">
+                    Jeansysaur
+                  </h1>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <div class="modal-body">
+                  Jeansysaurs have never played Valosaur with their fellow
+                  comrades. They are not fond of the competition due to the
+                  toxicity found in random low Elosaurs. With a good mentor,
+                  Jeansysaurs may become known as "cracked" in Valosaur.
+                  However, their only desires currently are to build Leningrad
+                  inside of Scoobasaurs' Minecraft server.
+                </div>
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-info"
+                    data-bs-dismiss="modal"
+                  >
+                    Close
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="modal fade"
+            id="chambersaurModal"
+            tabindex="-1"
+            aria-labelledby="chambersaurModal"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title" id="chambersaurModalLabel">
+                    Chambersaur
+                  </h1>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <div class="modal-body">
+                  Chambersaurs are elite dinosaurs in the realm of Valosaurs.
+                  Several Chambersaurs have hit Radiantsaur due to their ability
+                  to meow out of danger in a flash. They likely will remain in
+                  their elite status regardless of the changes to their
+                  abilities done by Riotsaurs, but will be seen as less
+                  efficient dinosaurs in Valosaur.
+                </div>
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-info"
+                    data-bs-dismiss="modal"
+                  >
+                    Close
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="modal fade"
+            id="jettasaurModal"
+            tabindex="-1"
+            aria-labelledby="jettasaurModal"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title" id="jettasaurModalLabel">
+                    Jettasaur
+                  </h1>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <div class="modal-body">
+                  Jettasaurs are elite dinosaurs in Valosaurs, but perform a
+                  much different role in the ecosystem compared to Chambersaurs.
+                  They have also hit Radiantsaur - several have been signed onto
+                  pro dinosaur teams. They have been hit with many changes to
+                  their skills by Riotsaurs, but remain as one of the many
+                  picked dinosaurs in the competitive Valosaur draft.
+                </div>
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-info"
+                    data-bs-dismiss="modal"
+                  >
+                    Close
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="modal fade"
+            id="omenosaurModal"
+            tabindex="-1"
+            aria-labelledby="omenosaurModal"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title" id="omenosaurModalLabel">
+                    Omenosaur
+                  </h1>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <div class="modal-body">
+                  Omenosaurs used to be elite dinosaurs in Valosaur, with some
+                  becoming Radiantsaurs. However, due to the hits done by
+                  Riotsaurs, they have mostly become obselete in the competitive
+                  Valosaur scene. They are outshined by other dinosaurs such as
+                  ThickyBrimmysaurs and Vipersaurs, but still remain a fan
+                  favorite even amongsts Beebosaurs. Hopefully, their return to
+                  power will come soon in the draft.
+                </div>
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-info"
+                    data-bs-dismiss="modal"
+                  >
+                    Close
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="modal fade"
+            id="razeysaurModal"
+            tabindex="-1"
+            aria-labelledby="razeysaurModal"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title" id="razeysaurModalLabel">
+                    Razeysaur
+                  </h1>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <div class="modal-body">
+                  Razeysaurs remain as a fan favorite elite dinosaur in
+                  Valosaur. Although Riotsaurs have changed how their explosive
+                  boom booms worked, they still find their way bouncing into the
+                  fire and finding success in the battlefield. Beebosaurs can
+                  always count on a good Razeysaur to change the tide of battle
+                  in their journey to Radiantsaur status.
+                </div>
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-info"
+                    data-bs-dismiss="modal"
+                  >
+                    Close
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="/public/js/vendor.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/js/all.min.js"></script>
+  </body>
+</html>
